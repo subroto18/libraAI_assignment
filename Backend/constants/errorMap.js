@@ -18,9 +18,30 @@ const errorMap = {
     statusCode: 400,
     message: "Request body is required",
   },
+
   ROUTE_NOT_FOUND: {
     statusCode: 404,
     message: "Route not found",
+  },
+
+  CATEGORY_NOT_FOUND: {
+    statusCode: 404,
+    message: "Category not found",
+  },
+
+  CATEGORY_ALREADY_EXISTS: {
+    statusCode: 409,
+    message: "Category already exists",
+  },
+
+  EXPENSE_NOT_FOUND: {
+    statusCode: 404,
+    message: "Expense not found",
+  },
+
+  FORBIDDEN: {
+    statusCode: 403,
+    message: "You do not have permission to perform this action",
   },
 };
 

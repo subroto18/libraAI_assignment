@@ -1,0 +1,65 @@
+const MESSAGES = require("../constants/messages");
+const expenseService = require("../services/expense.service");
+const asyncHandler = require("../utils/asyncHandler");
+const sendResponse = require("../utils/responseHandler");
+
+const createExpense = asyncHandler(async (req, res) => {
+  const data = await expenseService.createExpense(
+    req.params.id,
+    req.body,
+    req.user.id,
+  );
+  return sendResponse({
+    res,
+    statusCode: 201,
+    message: MESSAGES.EXPENSE.CREATED,
+    data: data,
+  });
+});
+
+const updateExpense = asyncHandler(async (req, res) => {
+  const data = await expenseService.updateExpense(
+    req.params.id,
+    req.body,
+    req.user.id,
+  );
+  return sendResponse({
+    res,
+    statusCode: 200,
+    message: MESSAGES.EXPENSE.UPDATED,
+    data,
+  });
+});
+
+const deleteExpense = asyncHandler(async (req, res) => {
+  const { expenseId } = req.params;
+  await expenseService.deleteExpense(expenseId, req.user.id);
+  return sendResponse({
+    res,
+    statusCode: 200,
+    message: MESSAGES.EXPENSE.DELETED,
+    data,
+  });
+});
+
+const getExpenseHistory = asyncHandler(async (req, res) => {
+  const expenses = await expenseService.getExpenseHistory({
+    userId: req.user.id,
+    search: req.query.search,
+    category: req.query.category,
+    curson: req.query.cursor,
+    limit: Number(req.query.limit) || 10,
+  });
+
+  return res.status(200).json({
+    success: true,
+    data: expenses,
+  });
+});
+
+module.exports = {
+  createExpense,
+  updateExpense,
+  deleteExpense,
+  getExpenseHistory,
+};

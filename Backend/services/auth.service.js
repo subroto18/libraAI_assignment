@@ -4,7 +4,6 @@ const { generateAccessToken } = require("../utils/generateToken");
 
 const register = async (payload) => {
   const { name, email, password } = payload || {};
-
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new AppError({
