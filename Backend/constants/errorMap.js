@@ -16,7 +16,7 @@ const errorMap = {
 
   VALIDATION_ERROR: {
     statusCode: 400,
-    message: "Validation failed",
+    message: "Request body is required",
   },
   ROUTE_NOT_FOUND: {
     statusCode: 404,
