@@ -57,9 +57,20 @@ const getExpenseHistory = asyncHandler(async (req, res) => {
   });
 });
 
+const getDashboard = asyncHandler(async (req, res) => {
+  const data = await expenseService.getDashboard(req.user.id);
+  return sendResponse({
+    res,
+    statusCode: 200,
+    message: MESSAGES.EXPENSE.DASHBOARD_FETCHED,
+    data,
+  });
+});
+
 module.exports = {
   createExpense,
   updateExpense,
   deleteExpense,
   getExpenseHistory,
+  getDashboard,
 };

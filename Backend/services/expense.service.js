@@ -76,9 +76,7 @@ const getExpenseHistory = async ({
   cursor,
   limit,
 }) => {
-  const query = {
-    userId,
-  };
+  const query = { userId };
 
   if (search) {
     query.title = {
@@ -96,8 +94,9 @@ const getExpenseHistory = async ({
       $lt: cursor,
     };
   }
+
   const expenses = await Expense.find(query)
-    .sort({ expenseDate: -1 })
+    .sort({ _id: -1 })
     .limit(limit + 1);
 
   const hasNextPage = expenses.length > limit;
@@ -117,6 +116,81 @@ const getExpenseHistory = async ({
   };
 };
 
+const getDashboard = async (userId) => {
+  const startOfMonth = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    1,
+  );
+
+  const endOfMonth = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1,
+    1,
+  );
+
+  const [
+    totalExpensesResult,
+    monthlyExpensesResult,
+    transactionCount,
+    recentTransactions,
+  ] = await Promise.all([
+    Expense.aggregate([
+      {
+        $match: {
+          userId,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: "$amount",
+          },
+        },
+      },
+    ]),
+
+    Expense.aggregate([
+      {
+        $match: {
+          userId,
+          expenseDate: {
+            $gte: startOfMonth,
+            $lt: endOfMonth,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: "$amount",
+          },
+        },
+      },
+    ]),
+
+    Expense.countDocuments({
+      userId,
+    }),
+
+    Expense.find({
+      userId,
+    })
+      .sort({ expenseDate: -1 })
+      .limit(5)
+      .lean(),
+  ]);
+
+  return {
+    totalExpenses: totalExpensesResult[0]?.total || 0,
+    monthlyExpenses: monthlyExpensesResult[0]?.total || 0,
+    transactionCount,
+    recentTransactions,
+  };
+};
+
 const formatExpense = (expense) => ({
   id: expense._id,
   title: expense.title,
@@ -133,4 +207,5 @@ module.exports = {
   updateExpense,
   deleteExpense,
   getExpenseHistory,
+  getDashboard,
 };

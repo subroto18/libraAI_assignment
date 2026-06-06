@@ -16,6 +16,7 @@ const MESSAGES = {
     DELETED: "Expense deleted successfully",
     FETCHED: "Expenses fetched successfully",
     DETAILS_FETCHED: "Expense details fetched successfully",
+    DASHBOARD_FETCHED: "Dashboard data fetched successfully",
     NOT_FOUND: "Expense not found",
   },
 

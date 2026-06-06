@@ -10,10 +10,11 @@ const {
   updateExpense,
   deleteExpense,
   getExpenseHistory,
+  getDashboard,
 } = require("../../controllers/expense.controller");
 router.post("/", validate(createExpenseSchema), createExpense);
 router.get("/history", getExpenseHistory);
-// router.get("/:id", expenseController.getExpenseById);
 router.put("/:id", validate(updateExpenseSchema), updateExpense);
 router.delete("/:id", deleteExpense);
+router.get("/dashboard", getDashboard);
 module.exports = router;
