@@ -1,9 +1,10 @@
 import { useDashboard } from "../hooks/useDashboard";
 import { DashboardStats } from "../components/DashboardStats";
-import { ExpenseChart } from "../components/ExpenseChart";
 import { RecentTransactions } from "../components/RecentTransactions";
 import { DashboardSkeleton } from "../components/common/DashboardSkeleton";
 import { ErrorState } from "../components/common/ErrorState";
+import ExpenseTrendChart from "../components/charts/ExpenseTrendChart";
+import ExpenseCategoryChart from "../components/charts/ExpenseCategoryChart";
 
 const DashboardPage = () => {
   const { dashboard, loading, error, refetch } = useDashboard();
@@ -44,7 +45,10 @@ const DashboardPage = () => {
           transactionCount={dashboard?.transactionCount || 0}
         />
 
-        <ExpenseChart />
+        <div className="grid gap-6 lg:grid-cols-2">
+          <ExpenseTrendChart data={dashboard?.expenseTrend || []} />
+          <ExpenseCategoryChart data={dashboard?.categoryBreakdown || []} />
+        </div>
 
         <RecentTransactions
           transactions={dashboard?.recentTransactions || []}
