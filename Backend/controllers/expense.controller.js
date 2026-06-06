@@ -4,11 +4,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const sendResponse = require("../utils/responseHandler");
 
 const createExpense = asyncHandler(async (req, res) => {
-  const data = await expenseService.createExpense(
-    req.params.id,
-    req.body,
-    req.user.id,
-  );
+  const data = await expenseService.createExpense(req.body, req.user.id);
   return sendResponse({
     res,
     statusCode: 201,
@@ -32,13 +28,12 @@ const updateExpense = asyncHandler(async (req, res) => {
 });
 
 const deleteExpense = asyncHandler(async (req, res) => {
-  const { expenseId } = req.params;
-  await expenseService.deleteExpense(expenseId, req.user.id);
+  const { id } = req.params;
+  await expenseService.deleteExpense(id, req.user.id);
   return sendResponse({
     res,
     statusCode: 200,
     message: MESSAGES.EXPENSE.DELETED,
-    data,
   });
 });
 
@@ -48,7 +43,7 @@ const getExpenseHistory = asyncHandler(async (req, res) => {
     search: req.query.search,
     category: req.query.category,
     curson: req.query.cursor,
-    limit: Number(req.query.limit) || 10,
+    limit: Number(req.query.limit),
   });
 
   return res.status(200).json({

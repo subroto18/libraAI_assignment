@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const Expense = require("../model/expense.module");
 const AppError = require("../utils/AppError");
+const {
+  RECENT_TRANSACTIONS_LIMIT,
+  DEFAULT_PAGE_SIZE,
+} = require("../constants/expense");
 const createExpense = async (body = {}, userId) => {
   const payload = {
     userId,
@@ -74,7 +78,7 @@ const getExpenseHistory = async ({
   search,
   category,
   cursor,
-  limit,
+  limit = EXPENSE_CONSTANTS.DEFAULT_PAGE_SIZE,
 }) => {
   const query = { userId };
 
@@ -134,11 +138,13 @@ const getDashboard = async (userId) => {
     monthlyExpensesResult,
     transactionCount,
     recentTransactions,
+    expenseTrendResult,
+    categoryBreakdownResult,
   ] = await Promise.all([
     Expense.aggregate([
       {
         $match: {
-          userId,
+          userId: new mongoose.Types.ObjectId(userId),
         },
       },
       {
@@ -154,7 +160,7 @@ const getDashboard = async (userId) => {
     Expense.aggregate([
       {
         $match: {
-          userId,
+          userId: new mongoose.Types.ObjectId(userId),
           expenseDate: {
             $gte: startOfMonth,
             $lt: endOfMonth,
@@ -179,15 +185,89 @@ const getDashboard = async (userId) => {
       userId,
     })
       .sort({ expenseDate: -1 })
-      .limit(5)
+      .limit(RECENT_TRANSACTIONS_LIMIT)
       .lean(),
+
+    Expense.aggregate([
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $group: {
+          _id: {
+            month: {
+              $month: "$expenseDate",
+            },
+          },
+          amount: {
+            $sum: "$amount",
+          },
+        },
+      },
+      {
+        $sort: {
+          "_id.month": 1,
+        },
+      },
+    ]),
+
+    Expense.aggregate([
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $group: {
+          _id: "$category",
+          amount: {
+            $sum: "$amount",
+          },
+        },
+      },
+      {
+        $sort: {
+          amount: -1,
+        },
+      },
+    ]),
   ]);
+
+  const monthNames = [
+    "",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const expenseTrend = expenseTrendResult.map((item) => ({
+    month: monthNames[item._id.month],
+    amount: item.amount,
+  }));
+
+  const categoryBreakdown = categoryBreakdownResult.map((item) => ({
+    category: item._id,
+    amount: item.amount,
+  }));
 
   return {
     totalExpenses: totalExpensesResult[0]?.total || 0,
     monthlyExpenses: monthlyExpensesResult[0]?.total || 0,
     transactionCount,
     recentTransactions,
+    expenseTrend,
+    categoryBreakdown,
   };
 };
 
