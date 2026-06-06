@@ -1,0 +1,13 @@
+:root {
+  /* Brand Colors */
+  --color-primary: #047afb;
+  --color-primary-hover: #0368d7;
+  --color-primary-light: #eaf4ff;
+  /* Neutral Colors */
+  --color-background: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #64748b;
+  /* Status */
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+}

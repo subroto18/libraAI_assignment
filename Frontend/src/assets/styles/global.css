@@ -1,0 +1,17 @@
+body {
+  font-family: "Outfit", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-light: var(--color-primary-light);
+  --color-background: var(--color-background);
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+  --color-danger: var(--color-danger);
+  --color-success: var(--color-success);
+}
