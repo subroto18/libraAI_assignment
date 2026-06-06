@@ -45,7 +45,6 @@ export const variantClasses = {
   auth: `
       !border-white/10
       !bg-white/[0.04]
-  
       hover:!border-cyan-500/50
       focus-within:!border-cyan-400
       focus-within:!shadow-[0_0_0_4px_rgba(34,211,238,0.12)]
