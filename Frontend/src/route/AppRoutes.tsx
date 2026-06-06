@@ -5,6 +5,7 @@ import MainLayout from "@/layout/MainLayout";
 import AuthLayout from "@/features/auth/layouts/AuthLayout";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
+import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
 const AppRoutes = () => {
   return (
@@ -23,8 +24,8 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         >
-          <Route index element={<>Home</>} />
-          <Route path="dashboard" element={<>Home</>} />
+          <Route index element={<DashboardPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
