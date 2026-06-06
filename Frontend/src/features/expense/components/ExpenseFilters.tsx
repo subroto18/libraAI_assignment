@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-
+import { CATEGORY_OPTIONS } from "../constants/category.constants";
 interface ExpenseFiltersProps {
   search: string;
   category: string;
@@ -10,37 +10,6 @@ interface ExpenseFiltersProps {
   onCategoryChange: (value: string) => void;
   onAddExpense: () => void;
 }
-
-const categoryOptions = [
-  {
-    label: "All Categories",
-    value: "",
-  },
-  {
-    label: "Food",
-    value: "Food",
-  },
-  {
-    label: "Travel",
-    value: "Travel",
-  },
-  {
-    label: "Shopping",
-    value: "Shopping",
-  },
-  {
-    label: "Bills",
-    value: "Bills",
-  },
-  {
-    label: "Health",
-    value: "Health",
-  },
-  {
-    label: "Education",
-    value: "Education",
-  },
-];
 
 const ExpenseFilters = ({
   search,
@@ -69,11 +38,10 @@ const ExpenseFilters = ({
             prefix={<SearchOutlined />}
             className="w-full md:w-80"
           />
-
           <Select
             value={category}
             onChange={onCategoryChange}
-            options={categoryOptions}
+            options={CATEGORY_OPTIONS}
             className="w-full md:w-52"
             placeholder="Category"
           />

@@ -1,7 +1,7 @@
 import { Select as AntSelect } from "antd";
 import type { SelectProps } from "antd";
 import clsx from "clsx";
-import { baseSelectClass, sizeClasses, variantClasses } from "./select.config";
+import { baseSelectClass, variantClasses } from "./select.config";
 import type { SelectOption, SelectSize, SelectUiVariant } from "./types.ts";
 interface Props extends Omit<SelectProps, "size" | "options"> {
   className?: string;

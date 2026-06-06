@@ -1,11 +1,4 @@
-import Button from "@/components/ui/Button";
-import { PlusOutlined } from "@ant-design/icons";
-
-interface ExpenseEmptyStateProps {
-  onAddExpense?: () => void;
-}
-
-const ExpenseEmptyState = ({ onAddExpense }: ExpenseEmptyStateProps) => {
+const ExpenseEmptyState = () => {
   return (
     <div
       className="
@@ -44,15 +37,6 @@ const ExpenseEmptyState = ({ onAddExpense }: ExpenseEmptyStateProps) => {
       <p className="mt-2 max-w-md text-slate-500">
         Start tracking your spending by creating your first expense record.
       </p>
-
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={onAddExpense}
-        className="mt-6"
-      >
-        Add Expense
-      </Button>
     </div>
   );
 };

@@ -27,7 +27,7 @@ const AppRoutes = () => {
         >
           <Route index element={<DashboardPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="expense" element={<ExpensePage />} />
+          <Route path="expenses" element={<ExpensePage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

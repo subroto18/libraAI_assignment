@@ -14,9 +14,7 @@ export const useExpenses = () => {
     try {
       setLoading(true);
       setError(null);
-
       const response = await expenseService.getExpenses(params);
-
       setExpenses(response.data.expenses || []);
     } catch (err: any) {
       setError(err?.response?.data?.message || "Failed to fetch expenses");
@@ -33,6 +31,7 @@ export const useExpenses = () => {
     expenses,
     loading,
     error,
+    fetchExpenses,
     refetch: fetchExpenses,
   };
 };

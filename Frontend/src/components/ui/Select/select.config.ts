@@ -1,8 +1,6 @@
 import type { SelectSize, SelectUiVariant } from "./types";
 
-export const baseSelectClass = `
-w-full
-`;
+export const baseSelectClass = `w-full`;
 
 export const sizeClasses: Record<SelectSize, string> = {
   sm: `
@@ -28,7 +26,6 @@ export const variantClasses: Record<SelectUiVariant, string> = {
   default: `
     [&_.ant-select-selector]:!border-slate-200
     [&_.ant-select-selector]:!bg-slate-50
-
     [&_.ant-select-selector:hover]:!border-primary
   `,
   success: "",
