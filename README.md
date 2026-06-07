@@ -222,6 +222,7 @@ JWT_EXPIRES_IN=7d
 - Recurring Expenses
 - Export Reports (CSV/PDF)
 - Dark Mode
+- Optimize api using React query
 - Infinite Scrolling
 - PWA Support
 - Email Notifications
