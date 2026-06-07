@@ -265,7 +265,7 @@ const getDashboard = async (userId) => {
     totalExpenses: totalExpensesResult[0]?.total || 0,
     monthlyExpenses: monthlyExpensesResult[0]?.total || 0,
     transactionCount,
-    recentTransactions,
+    recentTransactions: recentTransactions.map(formatExpense),
     expenseTrend,
     categoryBreakdown,
   };

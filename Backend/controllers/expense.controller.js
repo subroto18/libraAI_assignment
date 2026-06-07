@@ -1,3 +1,4 @@
+const EXPENSE_CONSTANTS = require("../constants/expense");
 const MESSAGES = require("../constants/messages");
 const expenseService = require("../services/expense.service");
 const asyncHandler = require("../utils/asyncHandler");
@@ -42,8 +43,8 @@ const getExpenseHistory = asyncHandler(async (req, res) => {
     userId: req.user.id,
     search: req.query.search,
     category: req.query.category,
-    curson: req.query.cursor,
-    limit: Number(req.query.limit),
+    cursor: req.query.cursor,
+    limit: Number(req.query.limit || EXPENSE_CONSTANTS.DEFAULT_PAGE_SIZE),
   });
 
   return res.status(200).json({
