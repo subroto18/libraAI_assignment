@@ -35,7 +35,7 @@ const Header = () => {
                 className="h-10 object-contain"
               />
 
-              <span className="hidden text-lg font-bold text-slate-900 sm:block">
+              <span className="hidden text-lg font-bold text-slate-900 md:block">
                 {APP_CONFIG.appName}
               </span>
             </button>
@@ -94,7 +94,9 @@ const Header = () => {
               <p className="text-xs text-slate-500">{user?.email}</p>
             </div>
 
-            <Avatar name={user?.name || ""} />
+            <div className="hidden md:block">
+              <Avatar name={user?.name || ""} />
+            </div>
 
             <Button size="sm" danger onClick={handleLogout}>
               {HEADER_TEXT.logout}

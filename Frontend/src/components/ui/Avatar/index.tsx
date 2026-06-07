@@ -11,7 +11,7 @@ const Avatar = ({ name, className }: Props) => {
   return (
     <div
       className={clsx(
-        "flex h-11 w-11 items-center justify-center rounded-full bg-cyan-500 text-sm font-semibold text-white shadow-sm",
+        "h-11 w-11 items-center flex justify-center rounded-full bg-cyan-500 text-sm font-semibold text-white shadow-sm",
         className,
       )}
     >
