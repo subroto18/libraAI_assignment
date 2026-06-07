@@ -1,4 +1,5 @@
 import CategoryTag from "@/components/ui/CategoryTag";
+import { capitalize, formatCurrency, formatDate } from "@/utils/helper";
 interface Transaction {
   id: string;
   title: string;
@@ -37,26 +38,21 @@ export const RecentTransactions = ({
             "
           >
             <div>
-              <p className="font-medium text-slate-900">{transaction.title}</p>
+              <p className="font-medium text-slate-900">
+                {capitalize(transaction.title)}
+              </p>
 
               <div className="mt-2 flex items-center gap-3">
-                <CategoryTag category={transaction.category} />
+                <CategoryTag category={capitalize(transaction.category)} />
 
                 <span className="text-sm text-slate-500">
-                  {new Date(transaction.expenseDate).toLocaleDateString(
-                    "en-IN",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    },
-                  )}
+                  {formatDate(transaction.expenseDate)}
                 </span>
               </div>
             </div>
 
             <p className="text-lg font-semibold text-slate-900">
-              ₹{transaction.amount.toLocaleString()}
+              {formatCurrency(transaction.amount)}
             </p>
           </div>
         ))}
