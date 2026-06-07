@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { Expense } from "../types/expense.types";
 import { expenseService } from "@/api/services/expense.service";
 import { getErrorMessage } from "@/utils/getErrorMessage";
-
+let expenseCache: Expense[] = [];
 export const useExpenses = () => {
-  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>(expenseCache);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,14 @@ export const useExpenses = () => {
     search?: string;
     category?: string;
     limit?: string;
+    force?: boolean;
   }) => {
+    const hasFilters = !!params?.search || !!params?.category;
+    if (expenseCache.length && !hasFilters) {
+      setExpenses(expenseCache);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -25,14 +32,16 @@ export const useExpenses = () => {
       if (params?.search) {
         queryParams.search = params.search;
       }
-
       if (params?.category) {
         queryParams.category = params.category;
       }
       const response = await expenseService.getExpenses(queryParams);
-      setExpenses(response.data.expenses || []);
+      const expenses = response.data.expenses || [];
+      if (!hasFilters) {
+        expenseCache = expenses;
+      }
+      setExpenses(expenses);
       setNextCursor(response.data.pagination?.nextCursor || null);
-
       setHasNextPage(response.data.pagination?.hasNextPage || false);
     } catch (err: any) {
       const message = getErrorMessage(err);
@@ -44,7 +53,6 @@ export const useExpenses = () => {
 
   const loadMore = async (params?: { search?: string; category?: string }) => {
     if (!nextCursor) return;
-
     try {
       setLoading(true);
       const queryParams: Record<string, string | number> = {
@@ -60,7 +68,13 @@ export const useExpenses = () => {
         queryParams.category = params.category;
       }
       const response = await expenseService.getExpenses(queryParams);
-      setExpenses((prev) => [...prev, ...response.data.expenses]);
+
+      const updatedExpenses = [...expenses, ...response.data.expenses];
+
+      if (!params?.search && !params?.category) {
+        expenseCache = updatedExpenses;
+      }
+      setExpenses(updatedExpenses);
       setNextCursor(response.data.pagination?.nextCursor || null);
       setHasNextPage(response.data.pagination?.hasNextPage || false);
     } finally {
@@ -77,7 +91,10 @@ export const useExpenses = () => {
     loading,
     error,
     fetchExpenses,
-    refetch: fetchExpenses,
+    refetch: () =>
+      fetchExpenses({
+        force: true,
+      }),
     loadMore,
     hasNextPage,
   };
