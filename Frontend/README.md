@@ -1,82 +1,92 @@
 # Expense Tracker Frontend
 
-A modern and responsive Expense Tracker application built with React, TypeScript, Tailwind CSS, and Ant Design.
+A modern expense management application built with React, TypeScript, Ant Design, and Tailwind CSS. The application allows users to manage expenses, visualize spending patterns, and track financial activities through an intuitive dashboard.
 
 ## Features
 
 ### Authentication
 
-- User Registration
 - User Login
+- User Registration
 - Protected Routes
-- JWT-based Authentication
+- Public Route Guard
+- JWT Authentication
 - Persistent Login State
+- Logout Functionality
 
 ### Dashboard
 
-- Total Expenses Overview
-- Monthly Expenses Summary
-- Transaction Count
+- Total Expenses Summary
+- Current Month Expense Summary
+- Total Transaction Count
 - Recent Transactions
-- Monthly Expense Trend Chart
+- Expense Trend Chart
 - Category-wise Expense Breakdown Chart
+- Loading Skeletons
+- Error State Handling
 
 ### Expense Management
 
-- Add Expense
-- Edit Expense
+- Create Expense
+- Update Expense
 - Delete Expense
 - View Expense History
 - Search Expenses
 - Filter Expenses by Category
-- Responsive Expense Listing
+- Cursor-based Pagination
+- Load More Functionality
+- Responsive Expense List
 
 ### User Experience
 
 - Responsive Design
-- Loading Skeletons
+- Mobile Friendly UI
+- Custom Reusable UI Components
+- Loading States
+- Error States
 - Empty States
-- Error Handling
+- Form Validation
 - Toast Notifications
-- Reusable UI Components
 
 ---
 
 ## Tech Stack
 
-### Frontend
+### Core
 
 - React 18
 - TypeScript
-- React Router DOM
+- React Router v7
 - Axios
+
+### UI
+
 - Ant Design
-- Tailwind CSS
+- Tailwind CSS v4
+- Ant Design Icons
+
+### Charts
+
 - Recharts
 
-### Development Tools
+### Utilities
 
-- Vite
-- ESLint
-- Prettier
+- Moment.js
 
 ---
 
 ## Project Structure
 
-```text
+```bash
 src
 │
 ├── api
-│   ├── axios.ts
-│   ├── endpoints.ts
-│   └── services
+│   ├── services
+│   └── config
 │
 ├── components
 │   ├── common
 │   └── ui
-│
-├── config
 │
 ├── constants
 │
@@ -89,139 +99,294 @@ src
 │
 ├── hooks
 │
-├── layouts
+├── layout
 │
-├── pages
-│
-├── routes
+├── route
 │
 ├── types
 │
-└── utils
+├── utils
+│
+└── pages
 ```
 
 ---
 
-## Environment Variables
+## Dashboard Features
 
-Create a `.env.local` file in the project root.
+### Statistics
 
-```env
-VITE_API_BASE_URL=http://localhost:8000/api/v1
-```
+Displays:
 
----
+- Total Expenses
+- Monthly Expenses
+- Transaction Count
 
-## Installation
+### Expense Trend Chart
 
-Clone the repository:
+Visualizes expense trends month-wise using a line chart.
 
-```bash
-git clone <repository-url>
-```
+### Category Breakdown Chart
 
-Navigate to the project directory:
+Visualizes category-wise spending distribution using a pie chart.
 
-```bash
-cd expense-tracker-client
-```
+### Recent Transactions
 
-Install dependencies:
+Displays the latest transactions with:
 
-```bash
-npm install
-```
+- Category Tags
+- Expense Date
+- Amount
 
 ---
 
-## Running the Application
+## Expense Management Features
 
-Start the development server:
+### Expense List
 
-```bash
-npm run dev
-```
+Displays:
 
-Application will run on:
+- Expense Title
+- Category
+- Description
+- Expense Amount
+- Expense Date
+
+### Expense Actions
+
+- Edit Expense
+- Delete Expense
+
+### Search
+
+Debounced search implementation to reduce API calls.
 
 ```text
-http://localhost:5173
+User Types
+    ↓
+500ms Debounce
+    ↓
+API Call
+```
+
+### Category Filter
+
+Filter expenses by:
+
+- Food
+- Travel
+- Shopping
+- Bills
+- Health
+- Education
+
+### Pagination
+
+Cursor-based pagination implementation.
+
+Benefits:
+
+- Faster than offset pagination
+- Better scalability
+- Infinite-scroll friendly
+
+Implementation:
+
+```text
+Fetch First Page
+    ↓
+Receive nextCursor
+    ↓
+Load More
+    ↓
+Pass cursor
+    ↓
+Receive next page
 ```
 
 ---
 
-## Build for Production
+## Reusable UI Components
 
-```bash
-npm run build
+### Components
+
+- Button
+- Input
+- InputNumber
+- Select
+- Modal
+- Avatar
+- CategoryTag
+- Container
+
+### States
+
+- Loading Skeleton
+- Empty State
+- Error State
+
+---
+
+## Routing
+
+### Public Routes
+
+Accessible only when not authenticated.
+
+```text
+/auth/login
+/auth/register
 ```
 
-Preview production build:
+### Protected Routes
 
-```bash
-npm run preview
+Accessible only after authentication.
+
+```text
+/
+/dashboard
+/expenses
 ```
 
 ---
 
-## Available Scripts
+## Performance Optimizations
 
-```bash
-npm run dev
-npm run build
-npm run preview
-npm run lint
+### React Lazy Loading
+
+Implemented route-level code splitting.
+
+Lazy Loaded Pages:
+
+- Login Page
+- Register Page
+- Dashboard Page
+- Expense Page
+
+Benefits:
+
+- Smaller initial bundle
+- Faster page load
+- Better user experience
+
+### Debounced Search
+
+Reduces unnecessary API calls during typing.
+
+### Cursor Pagination
+
+Efficient data loading for large datasets.
+
+### Dashboard Caching
+
+Dashboard data is cached in memory to prevent unnecessary API requests when navigating between pages.
+
+---
+
+## Error Handling
+
+Centralized error handling using utility functions.
+
+Example:
+
+```typescript
+getErrorMessage(error);
+```
+
+Supports:
+
+- API Errors
+- Validation Errors
+- Unknown Errors
+
+---
+
+## Utility Functions
+
+### Date Formatting
+
+```typescript
+formatDate(date);
+formatDateTime(date);
+formatMonthYear(date);
+```
+
+### Currency Formatting
+
+```typescript
+formatCurrency(amount);
+```
+
+### String Helpers
+
+```typescript
+truncateText(text);
+capitalize(text);
+getShortId(id);
 ```
 
 ---
 
 ## API Integration
 
-The frontend communicates with the backend using Axios.
+### Dashboard
 
-Configured features:
+```http
+GET /dashboard
+```
 
-- Authentication APIs
-- Dashboard APIs
-- Expense APIs
-- Authorization via JWT Token
-- Global Request Interceptors
+### Expenses
 
----
+```http
+GET    /expenses/history
+POST   /expenses
+PUT    /expenses/:id
+DELETE /expenses/:id
+```
 
-## Charts
+Supports:
 
-Dashboard includes:
-
-### Monthly Expense Trend
-
-Visual representation of expenses over time using a line chart.
-
-### Category Breakdown
-
-Donut chart showing distribution of expenses across categories.
+- Search
+- Category Filter
+- Cursor Pagination
 
 ---
 
-## Responsive Design
+## Installation
 
-The application is fully responsive and optimized for:
+```bash
+git clone <repository-url>
 
-- Mobile Devices
-- Tablets
-- Laptops
-- Desktop Screens
+cd expense-tracker-frontend
+
+npm install
+
+npm run dev
+```
+
+---
+
+## Environment Variables
+
+Create a `.env` file:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000/api
+```
 
 ---
 
 ## Future Improvements
 
 - Dark Mode
-- Export Expenses to CSV
-- Pagination
-- Budget Management
-- Advanced Analytics
+- Infinite Scrolling
+- Export Expenses (CSV/PDF)
+- Expense Budget Tracking
 - Category Management
+- Advanced Analytics
+- React Query Integration
+- Offline Support
+- PWA Support
 
 ---
 
@@ -229,4 +394,4 @@ The application is fully responsive and optimized for:
 
 Subroto Chakraborty
 
-Frontend Developer | React Developer | MERN Stack Developer
+Frontend Developer | React | TypeScript | Next.js
