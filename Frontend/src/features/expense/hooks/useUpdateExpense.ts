@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "@/utils/toast";
 import { expenseService } from "@/api/services/expense.service";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 export const useUpdateExpense = () => {
   const [loading, setLoading] = useState(false);
@@ -14,8 +15,8 @@ export const useUpdateExpense = () => {
       toast.success(response.message || "Expense updated successfully");
       return response;
     } catch (err: any) {
-      const message =
-        err?.response?.data?.message || "Failed to update expense";
+      const message = getErrorMessage(err);
+      toast.error(message);
       setError(message);
       throw err;
     } finally {
