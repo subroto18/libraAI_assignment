@@ -14,8 +14,6 @@ export const useExpenses = () => {
     category?: string;
     limit?: string;
   }) => {
-    const hasFilters = !!params?.search || !!params?.category;
-
     try {
       setLoading(true);
       setError(null);
