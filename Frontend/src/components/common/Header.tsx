@@ -24,7 +24,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 shadow-sm backdrop-blur-md">
       <Container maxWidth="98%">
         <div className="flex h-20 items-center justify-between">
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-5 md:gap-10">
             <button
               onClick={() => navigate(ROUTES.DASHBOARD)}
               className="flex items-center gap-3 cursor-pointer"
