@@ -40,7 +40,7 @@ const Header = () => {
               </span>
             </button>
 
-            <nav className=" items-center gap-2 md:flex">
+            <nav className="items-center gap-2 md:flex">
               <NavLink
                 to={ROUTES.DASHBOARD}
                 className={({ isActive }) =>
@@ -86,13 +86,16 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden text-right md:block">
+            <div className="hidden text-right sm:block">
               <p className="text-sm font-semibold text-slate-800">
                 {user?.name}
               </p>
+
               <p className="text-xs text-slate-500">{user?.email}</p>
             </div>
-            <Avatar className="hidden md:block" name={user?.name || ""} />
+
+            <Avatar name={user?.name || ""} />
+
             <Button size="sm" danger onClick={handleLogout}>
               {HEADER_TEXT.logout}
             </Button>
