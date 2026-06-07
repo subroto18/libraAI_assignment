@@ -86,16 +86,13 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden text-right sm:block">
+            <div className="hidden text-right md:block">
               <p className="text-sm font-semibold text-slate-800">
                 {user?.name}
               </p>
-
               <p className="text-xs text-slate-500">{user?.email}</p>
             </div>
-
-            <Avatar name={user?.name || ""} />
-
+            <Avatar className="hidden md:block" name={user?.name || ""} />
             <Button size="sm" danger onClick={handleLogout}>
               {HEADER_TEXT.logout}
             </Button>
