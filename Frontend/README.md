@@ -2,6 +2,22 @@
 
 A modern expense management application built with React, TypeScript, Ant Design, and Tailwind CSS. The application allows users to manage expenses, visualize spending patterns, and track financial activities through an intuitive dashboard.
 
+## Live Demo
+
+Frontend: https://subroto-libraai.netlify.app/
+
+Backend API: https://libraai-assignment.onrender.com/api/v1
+
+## Demo Credentials
+
+Use the following credentials to explore the application:
+
+**Email:** [test@gmail.com](mailto:test@gmail.com)
+
+**Password:** 123456
+
+---
+
 ## Features
 
 ### Authentication
