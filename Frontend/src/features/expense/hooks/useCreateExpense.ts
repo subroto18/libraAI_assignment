@@ -9,7 +9,6 @@ export const useCreateExpense = () => {
   const [error, setError] = useState<string | null>(null);
 
   const createExpense = async (payload: any) => {
-    console.log(payload);
     try {
       setLoading(true);
       setError(null);
