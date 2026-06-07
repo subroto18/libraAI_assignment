@@ -12,7 +12,8 @@ import { useDeleteExpense } from "../hooks/useDeleteExpense";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const ExpensePage = () => {
-  const { expenses, loading, refetch, fetchExpenses } = useExpenses();
+  const { expenses, loading, refetch, fetchExpenses, hasNextPage, loadMore } =
+    useExpenses();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
@@ -74,6 +75,8 @@ const ExpensePage = () => {
           loading={loading}
           onEdit={handleEditExpense}
           onDelete={handleDeleteExpense}
+          hasMore={hasNextPage}
+          onLoadMore={loadMore}
         />
       </div>
 

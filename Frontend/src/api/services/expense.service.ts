@@ -1,7 +1,12 @@
 import { api } from "@/api/axios";
 
 export const expenseService = {
-  getExpenses: async (params?: { search?: string; category?: string }) => {
+  getExpenses: async (params?: {
+    search?: string;
+    category?: string;
+    cursor?: string;
+    limit?: number;
+  }) => {
     const response = await api.get("/expenses/history", {
       params,
     });

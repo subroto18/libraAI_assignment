@@ -1,8 +1,10 @@
+import CategoryTag from "@/components/ui/CategoryTag";
 interface Transaction {
   id: string;
   title: string;
   amount: number;
   category: string;
+  expenseDate: string;
 }
 
 interface RecentTransactionsProps {
@@ -18,20 +20,43 @@ export const RecentTransactions = ({
         Recent Transactions
       </h2>
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         {transactions.map((transaction) => (
           <div
             key={transaction.id}
-            className="flex items-center justify-between rounded-xl p-4 hover:bg-slate-50"
+            className="
+              flex
+              items-center
+              justify-between
+              rounded-xl
+              border
+              border-slate-100
+              p-4
+              transition-colors
+              hover:bg-slate-50
+            "
           >
             <div>
               <p className="font-medium text-slate-900">{transaction.title}</p>
 
-              <p className="text-sm text-slate-500">{transaction.category}</p>
+              <div className="mt-2 flex items-center gap-3">
+                <CategoryTag category={transaction.category} />
+
+                <span className="text-sm text-slate-500">
+                  {new Date(transaction.expenseDate).toLocaleDateString(
+                    "en-IN",
+                    {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    },
+                  )}
+                </span>
+              </div>
             </div>
 
             <p className="text-lg font-semibold text-slate-900">
-              ₹{transaction.amount}
+              ₹{transaction.amount.toLocaleString()}
             </p>
           </div>
         ))}

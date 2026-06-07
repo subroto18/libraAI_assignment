@@ -27,7 +27,7 @@ const Header = () => {
           <div className="flex items-center gap-10">
             <button
               onClick={() => navigate(ROUTES.DASHBOARD)}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 cursor-pointer"
             >
               <img
                 src={APP_CONFIG.branding.logo}

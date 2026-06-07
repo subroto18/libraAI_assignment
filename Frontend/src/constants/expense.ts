@@ -1,0 +1,4 @@
+export const EXPENSE_CONSTANTS = {
+  DEFAULT_PAGE_SIZE: 4,
+  SEARCH_DEBOUNCE_MS: 500,
+} as const;

@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button";
 import { Expense } from "../types/expense.types";
 import ExpenseEmptyState from "./common/ExpenseEmptyState";
 import ExpenseSkeleton from "./common/ExpenseSkeleton";
@@ -7,6 +8,8 @@ interface ExpenseListProps {
   loading: boolean;
   onEdit?: (expense: Expense) => void;
   onDelete?: (expense: Expense) => void;
+  hasMore?: boolean;
+  onLoadMore?: () => void;
 }
 
 export const ExpenseList = ({
@@ -14,6 +17,8 @@ export const ExpenseList = ({
   loading,
   onDelete,
   onEdit,
+  hasMore,
+  onLoadMore,
 }: ExpenseListProps) => {
   if (loading) {
     return <ExpenseSkeleton />;
@@ -31,6 +36,14 @@ export const ExpenseList = ({
           onDelete={onDelete}
         />
       ))}
+
+      <>
+        {hasMore && (
+          <div className="mt-6 flex justify-center">
+            <Button onClick={onLoadMore}>Load More</Button>
+          </div>
+        )}
+      </>
     </div>
   );
 };
