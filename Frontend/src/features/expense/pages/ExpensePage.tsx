@@ -60,7 +60,6 @@ const ExpensePage = () => {
 
   const confirmDelete = useCallback(async () => {
     if (!expenseToDelete) return;
-
     await deleteExpense(expenseToDelete.id);
     setExpenseToDelete(null);
     refetch();
@@ -72,6 +71,13 @@ const ExpensePage = () => {
       category,
     });
   }, [debouncedSearch, category]);
+
+  const handleLoadMore = () => {
+    loadMore({
+      search,
+      category,
+    });
+  };
 
   const formLoading = createLoading || updateLoading;
 
@@ -92,7 +98,7 @@ const ExpensePage = () => {
           onEdit={handleEditExpense}
           onDelete={handleDeleteExpense}
           hasMore={hasNextPage}
-          onLoadMore={loadMore}
+          onLoadMore={handleLoadMore}
         />
       </div>
 

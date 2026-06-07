@@ -3,6 +3,7 @@ import { Expense } from "../types/expense.types";
 import ExpenseEmptyState from "./common/ExpenseEmptyState";
 import ExpenseSkeleton from "./common/ExpenseSkeleton";
 import ExpenseItem from "./ExpenseItem";
+import React from "react";
 interface ExpenseListProps {
   expenses: Expense[];
   loading: boolean;
@@ -12,7 +13,7 @@ interface ExpenseListProps {
   onLoadMore?: () => void;
 }
 
-export const ExpenseList = ({
+const ExpenseListComponent = ({
   expenses,
   loading,
   onDelete,
@@ -47,3 +48,5 @@ export const ExpenseList = ({
     </div>
   );
 };
+
+export const ExpenseList = React.memo(ExpenseListComponent);
