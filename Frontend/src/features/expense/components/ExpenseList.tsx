@@ -7,6 +7,7 @@ import React from "react";
 interface ExpenseListProps {
   expenses: Expense[];
   loading: boolean;
+  loadingMore: boolean;
   onEdit?: (expense: Expense) => void;
   onDelete?: (expense: Expense) => void;
   hasMore?: boolean;
@@ -16,6 +17,7 @@ interface ExpenseListProps {
 const ExpenseListComponent = ({
   expenses,
   loading,
+  loadingMore,
   onDelete,
   onEdit,
   hasMore,
@@ -41,7 +43,9 @@ const ExpenseListComponent = ({
       <>
         {hasMore && (
           <div className="mt-6 flex justify-center">
-            <Button onClick={onLoadMore}>Load More</Button>
+            <Button loading={loadingMore} onClick={onLoadMore}>
+              Load More
+            </Button>
           </div>
         )}
       </>

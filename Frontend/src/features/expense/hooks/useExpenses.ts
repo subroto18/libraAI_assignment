@@ -8,6 +8,7 @@ export const useExpenses = () => {
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fetchExpenses = async (params?: {
     search?: string;
@@ -42,7 +43,7 @@ export const useExpenses = () => {
   const loadMore = async (params?: { search?: string; category?: string }) => {
     if (!nextCursor) return;
     try {
-      setLoading(true);
+      setLoadingMore(true);
       const queryParams: Record<string, string | number> = {
         cursor: nextCursor,
         limit: EXPENSE_CONSTANTS.DEFAULT_PAGE_SIZE,
@@ -61,7 +62,7 @@ export const useExpenses = () => {
       setNextCursor(response.data.pagination?.nextCursor || null);
       setHasNextPage(response.data.pagination?.hasNextPage || false);
     } finally {
-      setLoading(false);
+      setLoadingMore(false);
     }
   };
 
@@ -72,6 +73,7 @@ export const useExpenses = () => {
   return {
     expenses,
     loading,
+    loadingMore,
     error,
     fetchExpenses,
     refetch: fetchExpenses,
