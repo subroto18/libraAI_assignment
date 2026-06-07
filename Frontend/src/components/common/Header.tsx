@@ -40,7 +40,7 @@ const Header = () => {
               </span>
             </button>
 
-            <nav className="hidden items-center gap-2 md:flex">
+            <nav className=" items-center gap-2 md:flex">
               <NavLink
                 to={ROUTES.DASHBOARD}
                 className={({ isActive }) =>
